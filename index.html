@@ -1,1 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Maths - Operaciones con Conjuntos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF9800;
+            --secondary: #4CAF50;
+            --accent: #2196F3;
+            --bg: #FFF9E1;
+            --text: #333;
+            --board-bg: #fdfdfd;
+        }
 
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .lion-doodle {
+            font-size: 80px;
+            margin: 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--primary);
+            font-size: 3rem;
+            margin: 10px 0;
+            text-shadow: 2px 2px #fff;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        select, input, button {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 10px 25px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .exercise-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--board-bg);
+            border: 4px solid #5D4037;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 10px 10px 0px #A1887F;
+            overflow: hidden;
+        }
+
+        .enunciado {
+            background: #5D4037;
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 300px;
+        }
+
+        .col-left {
+            padding: 20px;
+            border-right: 2px solid #5D4037;
+        }
+
+        .col-right {
+            padding: 20px;
+            background: #f9f9f9;
+            display: none; /* Se muestra al resolver */
+        }
+
+        .option-item {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .option-item:hover {
+            background: #e3f2fd;
+        }
+
+        .venn-svg {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .math {
+            font-style: italic;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .step {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        .highlight {
+            fill: #ffeb3b;
+            fill-opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="lion-doodle">🦁</div>
+        <h1>Leo Maths</h1>
+        <p>¡Aprende conjuntos de forma divertida!</p>
+    </header>
+
+    <div class="controls">
+        <div>
+            <label>Ejercicios: </label>
+            <input type="number" id="qty" min="1" max="25" value="5">
+        </div>
+        <div>
+            <label>Nivel: </label>
+            <select id="level">
+                <option value="basic">Básico</option>
+                <option value="intermediate">Intermedio</option>
+                <option value="advanced">Avanzado (Pre-U)</option>
+            </select>
+        </div>
+        <button onclick="generateExercises()">¡Generar Ejercicios!</button>
+    </div>
+
+    <div id="exercise-list" class="exercise-container"></div>
+
+    <script>
+        const symbols = { union: '∪', inter: '∩', diff: '-', symDiff: 'Δ' };
+
+        function generateExercises() {
+            const qty = document.getElementById('qty').value;
+            const level = document.getElementById('level').value;
+            const container = document.getElementById('exercise-list');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= qty; i++) {
+                const ex = createProblem(level, i);
+                renderProblem(ex, container);
+            }
+        }
+
+        function createProblem(level, index) {
+            let A, B, U = [0,1,2,3,4,5,6,7,8,9];
+            let operation = ['union', 'inter', 'diff', 'symDiff'][Math.floor(Math.random() * 4)];
+            let problem = { id: index, level: level };
+
+            if (level === 'basic') {
+                A = [1, 2, 3, 4];
+                B = [3, 4, 5, 6];
+                problem.compA = "A = { x ∈ ℕ / 1 ≤ x ≤ 4 }";
+                problem.compB = "B = { x ∈ ℕ / 3 ≤ x ≤ 6 }";
+            } else if (level === 'intermediate') {
+                const n = Math.floor(Math.random() * 3) + 2;
+                A = [2, 4, 6];
+                B = [4, 6, 8];
+                problem.compA = "A = { 2x / x ∈ ℕ, 1 ≤ x ≤ 3 }";
+                problem.compB = "B = { 2x / x ∈ ℕ, 2 ≤ x ≤ 4 }";
+            } else {
+                A = [1, 2, 3, 5, 7]; // Primos y 1
+                B = [2, 4, 6, 8]; // Pares
+                problem.compA = "A = { x / x es primo < 10 o x=1 }";
+                problem.compB = "B = { x / x es par, x < 10 }";
+            }
+
+            problem.extA = `{ ${A.join(', ')} }`;
+            problem.extB = `{ ${B.join(', ')} }`;
+            
+            let result;
+            let opName;
+            if (operation === 'union') {
+                result = [...new Set([...A, ...B])].sort();
+                opName = "Unión (A ∪ B)";
+            } else if (operation === 'inter') {
+                result = A.filter(x => B.includes(x)).sort();
+                opName = "Intersección (A ∩ B)";
+            } else if (operation === 'diff') {
+                result = A.filter(x => !B.includes(x)).sort();
+                opName = "Diferencia (A - B)";
+            } else {
+                let u = [...new Set([...A, ...B])];
+                let i = A.filter(x => B.includes(x));
+                result = u.filter(x => !i.includes(x)).sort();
+                opName = "Diferencia Simétrica (A Δ B)";
+            }
+
+            problem.enunciado = `Dados los conjuntos expresados por comprensión:<br><span class='math'>${problem.compA}</span><br><span class='math'>${problem.compB}</span><br>Calcule la operación: <b>${opName}</b>`;
+            problem.correct = `{ ${result.join(', ')} }`;
+            problem.options = shuffle([problem.correct, "{ 1, 2 }", "{ 3, 4, 5 }", "{ }", "{ 0, 1, 2 }"]);
+            problem.solutionSteps = [
+                `1. Determinamos por extensión A: ${problem.extA}`,
+                `2. Determinamos por extensión B: ${problem.extB}`,
+                `3. Aplicamos la propiedad de ${opName}: ${problem.correct}`,
+                `4. Gráficamente, se sombrean los elementos correspondientes en el diagrama de Venn.`
+            ];
+            problem.opType = operation;
+
+            return problem;
+        }
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function renderProblem(ex, container) {
+            const html = `
+                <div class="panel" id="p-${ex.id}">
+                    <div class="enunciado">Problema #${ex.id}: ${ex.enunciado}</div>
+                    <div class="columns">
+                        <div class="col-left">
+                            <strong>Selecciona la respuesta:</strong>
+                            ${ex.options.map(opt => `
+                                <label class="option-item">
+                                    <input type="radio" name="q-${ex.id}" onclick="showSolution(${ex.id})"> ${opt}
+                                </label>
+                            `).join('')}
+                            <div id="venn-${ex.id}">
+                                ${getVennDiagram(ex.opType)}
+                            </div>
+                        </div>
+                        <div class="col-right" id="sol-${ex.id}">
+                            <h4 style="color:var(--secondary)">✔ Solución Paso a Paso:</h4>
+                            ${ex.solutionSteps.map(step => `<div class="step">${step}</div>`).join('')}
+                            <p style="margin-top:20px; font-weight:bold; color:var(--primary)">Resultado Final: ${ex.correct}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += html;
+        }
+
+        function showSolution(id) {
+            document.getElementById(`sol-${id}`).style.display = 'block';
+        }
+
+        function getVennDiagram(op) {
+            const activeA = (op === 'union' || op === 'diff' || op === 'symDiff') ? 'highlight' : '';
+            const activeB = (op === 'union' || op === 'symDiff') ? 'highlight' : '';
+            const activeInter = (op === 'union' || op === 'inter') ? 'highlight' : '';
+            
+            // Lógica de sombreado simplificada para SVG
+            let fillA = "#eee", fillB = "#eee", fillCenter = "#eee";
+            if(op === 'union') { fillA = fillB = fillCenter = "#ffeb3b"; }
+            if(op === 'inter') { fillCenter = "#ffeb3b"; }
+            if(op === 'diff') { fillA = "#ffeb3b"; }
+            if(op === 'symDiff') { fillA = fillB = "#ffeb3b"; }
+
+            return `
+            <svg class="venn-svg" viewBox="0 0 200 120">
+                <defs>
+                    <clipPath id="clipA"><circle cx="70" cy="60" r="45" /></clipPath>
+                    <clipPath id="clipB"><circle cx="130" cy="60" r="45" /></clipPath>
+                </defs>
+                <!-- Círculo A -->
+                <circle cx="70" cy="60" r="45" fill="${fillA}" stroke="#333" stroke-width="2" />
+                <!-- Círculo B -->
+                <circle cx="130" cy="60" r="45" fill="${fillB}" stroke="#333" stroke-width="2" />
+                <!-- Intersección -->
+                <circle cx="130" cy="60" r="45" clip-path="url(#clipA)" fill="${fillCenter}" stroke="#333" stroke-width="2" />
+                
+                <text x="40" y="30" font-family="Arial" font-weight="bold">A</text>
+                <text x="150" y="30" font-family="Arial" font-weight="bold">B</text>
+            </svg>`;
+        }
+
+        // Generar iniciales
+        window.onload = generateExercises;
+    </script>
+</body>
+</html>
