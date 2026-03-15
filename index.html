@@ -13,210 +13,45 @@
             --accent: #2196F3;
             --bg: #FFF9E1;
             --text: #333;
-            --board-bg: #fdfdfd;
+            --board: #5D4037;
         }
 
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .lion-doodle {
-            font-size: 80px;
-            margin: 0;
-            animation: bounce 2s infinite;
-            display: inline-block;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        h1 {
-            font-family: 'Fredoka One', cursive;
-            color: var(--primary);
-            font-size: 3.5rem;
-            margin: 10px 0;
-            text-shadow: 3px 3px #fff;
-        }
+        body { font-family: 'Quicksand', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        header { text-align: center; margin-bottom: 30px; }
+        .lion-doodle { font-size: 80px; animation: bounce 2s infinite; display: inline-block; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        h1 { font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 3.5rem; margin: 10px 0; text-shadow: 3px 3px #fff; }
 
         .controls {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            max-width: 900px;
-            margin: 0 auto 40px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            border: 3px dashed var(--primary);
+            background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 900px; margin: 0 auto 40px; display: flex; flex-wrap: wrap; gap: 20px;
+            justify-content: center; align-items: center; border: 3px dashed var(--primary);
         }
 
-        select, input, button {
-            padding: 12px;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            outline: none;
-        }
+        .panel { background: #fff; border: 5px solid var(--board); border-radius: 15px; margin-bottom: 50px; 
+                 box-shadow: 12px 12px 0px #A1887F; max-width: 1100px; margin-left: auto; margin-right: auto; overflow: hidden; }
+        
+        .enunciado { background: var(--board); color: white; padding: 25px; font-size: 1.2rem; line-height: 1.6; }
+        .math-block { display: block; margin: 10px 0; color: #FFEB3B; font-weight: bold; font-family: 'Courier New', monospace; font-size: 1.3rem; }
+        
+        .columns { display: grid; grid-template-columns: 1fr 1fr; min-height: 400px; }
+        .col-left { padding: 30px; border-right: 3px solid var(--board); }
+        .col-right { padding: 30px; background: #f1f8e9; display: none; }
 
-        button {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 0 #388E3C;
-        }
+        .option-item { display: flex; align-items: center; margin: 12px 0; padding: 15px; border: 2px solid #e0e0e0; 
+                       border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
+        .option-item:hover { background: #fffde7; }
+        .correct-choice { background-color: #e8f5e9 !important; border-color: var(--secondary) !important; color: #2e7d32; font-weight: bold; }
+        .wrong-choice { background-color: #ffebee !important; border-color: var(--error) !important; color: #c62828; }
+        .status { margin-left: auto; font-size: 1.4rem; }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #388E3C;
-        }
+        .venn-container { text-align: center; margin-top: 25px; background: #fafafa; border-radius: 10px; padding: 10px; }
+        .step { margin-bottom: 12px; padding-left: 15px; border-left: 4px solid var(--accent); font-size: 1rem; background: rgba(255,255,255,0.6); padding: 8px; }
 
-        button:active {
-            transform: translateY(2px);
-            box-shadow: 0 0px 0 #388E3C;
-        }
-
-        .exercise-container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .panel {
-            background: var(--board-bg);
-            border: 5px solid #5D4037;
-            border-radius: 15px;
-            margin-bottom: 50px;
-            box-shadow: 12px 12px 0px #A1887F;
-            overflow: hidden;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .enunciado {
-            background: #5D4037;
-            color: white;
-            padding: 20px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-bottom: 2px solid #4E342E;
-        }
-
-        .columns {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            min-height: 350px;
-        }
-
-        .col-left {
-            padding: 25px;
-            border-right: 3px solid #5D4037;
-            background-color: #fff;
-        }
-
-        .col-right {
-            padding: 25px;
-            background: #f1f8e9;
-            display: none; /* Se activa al responder */
-            border-left: 1px solid #ddd;
-        }
-
-        /* Estilos de las opciones */
-        .option-item {
-            display: flex;
-            align-items: center;
-            margin: 12px 0;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            position: relative;
-            font-size: 1.1rem;
-        }
-
-        .option-item:hover {
-            background: #f5f5f5;
-            border-color: var(--accent);
-        }
-
-        .option-item input {
-            margin-right: 15px;
-            transform: scale(1.3);
-        }
-
-        /* Feedback visual */
-        .option-item.correct-choice {
-            background-color: #e8f5e9 !important;
-            border-color: var(--secondary) !important;
-            color: #2e7d32;
-            font-weight: bold;
-        }
-
-        .option-item.wrong-choice {
-            background-color: #ffebee !important;
-            border-color: var(--error) !important;
-            color: #c62828;
-        }
-
-        .feedback-mark {
-            margin-left: auto;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .venn-svg {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            margin-top: 25px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .math {
-            font-style: italic;
-            font-weight: bold;
-            color: #d32f2f;
-            background: #fff3e0;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .step {
-            margin-bottom: 12px;
-            font-size: 1rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            line-height: 1.5;
-        }
-
-        .disabled-options {
-            pointer-events: none;
-            opacity: 0.8;
-        }
+        select, input, button { padding: 12px; border-radius: 10px; border: 2px solid #ddd; font-family: 'Quicksand'; font-weight: bold; }
+        button { background: var(--secondary); color: white; border: none; cursor: pointer; box-shadow: 0 4px 0 #388E3C; }
+        button:active { transform: translateY(3px); box-shadow: none; }
+        .disabled { pointer-events: none; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -224,197 +59,211 @@
     <header>
         <div class="lion-doodle">🦁</div>
         <h1>Leo Maths</h1>
-        <p>¡Explora el mundo de los conjuntos con el Rey de la Selva!</p>
+        <p>¡Aprende Conjuntos con los ejemplos de clase y retos Pre-U!</p>
     </header>
 
     <div class="controls">
+        <div><label>Ejercicios: </label><input type="number" id="qty" min="1" max="25" value="4"></div>
         <div>
-            <label>Cantidad (1-25): </label>
-            <input type="number" id="qty" min="1" max="25" value="3">
-        </div>
-        <div>
-            <label>Nivel de Complejidad: </label>
+            <label>Nivel: </label>
             <select id="level">
-                <option value="basic">Nivel Básico</option>
-                <option value="intermediate">Nivel Intermedio</option>
-                <option value="advanced">Nivel Avanzado (Pre-U)</option>
+                <option value="basic">Básico (Operaciones Directas)</option>
+                <option value="intermediate">Intermedio (Leyes de Formación)</option>
+                <option value="advanced">Avanzado (Retos Pre-U)</option>
             </select>
         </div>
-        <button onclick="generateExercises()">¡Generar Pizarras!</button>
+        <button onclick="generateApp()">¡Generar Pizarras!</button>
     </div>
 
-    <div id="exercise-list" class="exercise-container"></div>
+    <div id="main-container"></div>
 
     <script>
-        function generateExercises() {
+        const history = [];
+
+        function generateApp() {
             const qty = parseInt(document.getElementById('qty').value);
             const level = document.getElementById('level').value;
-            const container = document.getElementById('exercise-list');
-            
-            if(qty < 1 || qty > 25) { alert("Por favor elige entre 1 y 25"); return; }
-            
+            const container = document.getElementById('main-container');
             container.innerHTML = '';
-
             for (let i = 1; i <= qty; i++) {
-                const ex = createProblem(level, i);
-                renderProblem(ex, container);
+                const problem = createProblem(level, i);
+                renderProblem(problem, container);
             }
         }
 
-        function createProblem(level, index) {
-            let A = [], B = [], result = [];
-            let operation = ['union', 'inter', 'diff', 'symDiff'][Math.floor(Math.random() * 4)];
-            let problem = { id: index, level: level, opType: operation };
+        function createProblem(level, id) {
+            const types = {
+                basic: ['union_names', 'inter_numbers', 'diff_direct', 'complement_basic'],
+                intermediate: ['form_linear', 'form_quad', 'cardinal_diff', 'sum_elements'],
+                advanced: ['system_unitary', 'three_sets', 'complex_logic']
+            };
 
-            // Generación lógica según nivel
-            if (level === 'basic') {
-                const start = Math.floor(Math.random() * 5) + 1;
-                A = [start, start+1, start+2, start+3];
-                B = [start+2, start+3, start+4, start+5];
-                problem.compA = `A = { x ∈ ℕ / ${start} ≤ x ≤ ${start+3} }`;
-                problem.compB = `B = { x ∈ ℕ / ${start+2} ≤ x ≤ ${start+5} }`;
-            } else if (level === 'intermediate') {
-                const n = Math.floor(Math.random() * 3) + 2;
-                A = [2, 4, 6, 8].filter(x => x <= n*4);
-                B = [4, 6, 8, 10].filter(x => x <= n*4);
-                problem.compA = `A = { 2x / x ∈ ℕ, 1 ≤ x ≤ ${Math.max(...A)/2} }`;
-                problem.compB = `B = { 2x / x ∈ ℕ, 2 ≤ x ≤ ${Math.max(...B)/2} }`;
-            } else {
-                A = [2, 3, 5, 7];
-                B = [1, 3, 5, 7, 9];
-                problem.compA = "A = { x / x es un número primo < 10 }";
-                problem.compB = "B = { x / x es un número impar < 10 }";
+            const type = types[level][Math.floor(Math.random() * types[level].length)];
+            let data = {};
+            const seed = Math.floor(Math.random() * 5);
+
+            switch(type) {
+                case 'form_linear': // Basado en Imagen 1 (Ej 4 y 6)
+                    let base = seed + 1;
+                    let A_vals = [0,1,2,3].map(x => 2*x + base);
+                    data = {
+                        enunciado: `Dado el conjunto por comprensión:<br><span class="math-block">M = {2x + ${base} / x ∈ ℕ; x ≤ 3}</span>`,
+                        pregunta: `Determine el conjunto M por extensión considerando a 0 ∈ ℕ.`,
+                        pasos: [`Tabulamos x = {0, 1, 2, 3}`, ...[0,1,2,3].map(x => `Para x=${x}: 2(${x})+${base} = ${2*x+base}`)],
+                        correct: `{ ${A_vals.join('; ')} }`,
+                        opType: 'unitary'
+                    };
+                    break;
+
+                case 'cardinal_diff': // Basado en Imagen 2
+                    let M = [0, 2, 4, 6];
+                    let N = [1, 2, 3, 4, 5];
+                    let diff = M.filter(x => !N.includes(x));
+                    data = {
+                        enunciado: `Sean los conjuntos:<br><span class="math-block">M = {0; 2; 4; 6} y N = {1; 2; 3; 4; 5}</span>`,
+                        pregunta: `Halle el cardinal del conjunto diferencia n(M - N)`,
+                        pasos: [
+                            `1. Hallamos M - N (elementos de M que no están en N).`,
+                            `2. M - N = { ${diff.join('; ')} }`,
+                            `3. El cardinal n es la cantidad de elementos: ${diff.length}`
+                        ],
+                        correct: diff.length.toString(),
+                        opType: 'diff'
+                    };
+                    break;
+
+                case 'form_quad': // Basado en Imagen 1 (Q) e Imagen 3 (Q)
+                    data = {
+                        enunciado: `Sea el conjunto:<br><span class="math-block">Q = {x² / x ∈ ℕ; 2 < x < 6}</span>`,
+                        pregunta: `¿Cuáles son los elementos del conjunto Q?`,
+                        pasos: [
+                            `Valores de x permitidos: {3, 4, 5}`,
+                            `Para x=3: 3² = 9`,
+                            `Para x=4: 4² = 16`,
+                            `Para x=5: 5² = 25`,
+                            `Q = {9; 16; 25}`
+                        ],
+                        correct: `{ 9; 16; 25 }`,
+                        opType: 'unitary'
+                    };
+                    break;
+
+                case 'sum_elements': // Basado en Imagen 1 (Ej 5)
+                    data = {
+                        enunciado: `Dados:<br><span class="math-block">A = {x³ / x ∈ ℕ, 0 ≤ x < 3}<br>B = {x-3 / x ∈ ℕ, 3 ≤ x < 6}</span>`,
+                        pregunta: `Halle la suma de los elementos de (A ∩ B)`,
+                        pasos: [
+                            `A = {0, 1, 8} (porque 0³, 1³, 2³)`,
+                            `B = {0, 1, 2} (porque 3-3, 4-3, 5-3)`,
+                            `Intersección A ∩ B = {0, 1}`,
+                            `Suma de elementos: 0 + 1 = 1`
+                        ],
+                        correct: "1",
+                        opType: 'inter'
+                    };
+                    break;
+
+                case 'complement_basic': // Basado en PDF Texto (Complemento)
+                    data = {
+                        enunciado: `Si el Universo es U = {1; 2; 3; 4; 5; 6; 7; 8} y el conjunto A = {2; 4; 6; 8}.`,
+                        pregunta: `Determine el complemento de A (A')`,
+                        pasos: [
+                            `Definición: A' son los elementos de U que no están en A.`,
+                            `U = {1, 2, 3, 4, 5, 6, 7, 8}`,
+                            `A = {2, 4, 6, 8}`,
+                            `A' = {1, 3, 5, 7}`
+                        ],
+                        correct: "{ 1; 3; 5; 7 }",
+                        opType: 'complement'
+                    };
+                    break;
+
+                default: // Fallback a sistema unitario (tus retos anteriores)
+                    data = {
+                        enunciado: `Sabiendo que G = {x + y; 10} y H = {x - y; 4} son conjuntos unitarios.`,
+                        pregunta: `Calcule el valor de x.`,
+                        pasos: [`x + y = 10`, `x - y = 4`, `Sumando: 2x = 14 ➔ x = 7`],
+                        correct: "7",
+                        opType: 'unitary'
+                    };
             }
 
-            problem.extA = `{ ${A.join(', ')} }`;
-            problem.extB = `{ ${B.join(', ')} }`;
-            
-            let opName;
-            if (operation === 'union') {
-                result = [...new Set([...A, ...B])].sort((a,b)=>a-b);
-                opName = "A ∪ B (Unión)";
-            } else if (operation === 'inter') {
-                result = A.filter(x => B.includes(x)).sort((a,b)=>a-b);
-                opName = "A ∩ B (Intersección)";
-            } else if (operation === 'diff') {
-                result = A.filter(x => !B.includes(x)).sort((a,b)=>a-b);
-                opName = "A - B (Diferencia)";
-            } else {
-                let u = [...new Set([...A, ...B])];
-                let i = A.filter(x => B.includes(x));
-                result = u.filter(x => !i.includes(x)).sort((a,b)=>a-b);
-                opName = "A Δ B (Diferencia Simétrica)";
-            }
-
-            problem.correct = `{ ${result.join(', ')} }`;
-            if(result.length === 0) problem.correct = "{ }";
-
-            // Crear opciones falsas
-            let options = new Set([problem.correct]);
+            let options = new Set([data.correct]);
             while(options.size < 4) {
-                let fake = [Math.floor(Math.random()*10), Math.floor(Math.random()*10)].sort();
-                options.add(`{ ${fake.join(', ')} }`);
+                let val = data.correct.includes('{') ? `{ ${Math.floor(Math.random()*10)}; ${Math.floor(Math.random()*10)} }` : (Math.floor(Math.random()*20)).toString();
+                options.add(val);
             }
-            problem.options = Array.from(options).sort(() => Math.random() - 0.5);
 
-            problem.enunciado = `Dados los conjuntos:<br><span class='math'>${problem.compA}</span><br><span class='math'>${problem.compB}</span><br>Halle el conjunto resultante de la operación: <b>${opName}</b>`;
-            
-            problem.solutionSteps = [
-                `<b>Paso 1:</b> Convertir A a extensión ➔ A = ${problem.extA}`,
-                `<b>Paso 2:</b> Convertir B a extensión ➔ B = ${problem.extB}`,
-                `<b>Paso 3:</b> Aplicar definición de ${opName}.`,
-                `<b>Paso 4:</b> Identificar elementos resultantes ➔ ${problem.correct}`
-            ];
-
-            return problem;
+            return { id, ...data, options: Array.from(options).sort(() => Math.random() - 0.5) };
         }
 
         function renderProblem(ex, container) {
-            const html = `
-                <div class="panel" id="panel-${ex.id}">
-                    <div class="enunciado">Problema #${ex.id}: ${ex.enunciado}</div>
-                    <div class="columns">
-                        <div class="col-left" id="options-container-${ex.id}">
-                            <strong>Selecciona tu respuesta:</strong>
-                            <div style="margin-top:15px">
-                                ${ex.options.map((opt, i) => `
-                                    <label class="option-item" id="label-${ex.id}-${i}">
-                                        <input type="radio" name="answer-${ex.id}" 
-                                               onclick="validateAnswer(${ex.id}, '${opt}', '${ex.correct}', ${i})">
-                                        <span>${opt}</span>
-                                        <span class="feedback-mark" id="mark-${ex.id}-${i}"></span>
-                                    </label>
-                                `).join('')}
+            const div = document.createElement('div');
+            div.className = 'panel';
+            div.innerHTML = `
+                <div class="enunciado">
+                    <strong>Problema #${ex.id}:</strong> ${ex.enunciado}
+                    <br><br><strong>Pregunta:</strong> ${ex.pregunta}
+                </div>
+                <div class="columns">
+                    <div class="col-left" id="left-${ex.id}">
+                        ${ex.options.map(opt => `
+                            <div class="option-item" onclick="check(${ex.id}, '${opt}', '${ex.correct}', this)">
+                                <input type="radio" name="r-${ex.id}">
+                                <span style="margin-left:10px">${opt}</span>
+                                <span class="status"></span>
                             </div>
-                            <div id="venn-${ex.id}">
-                                ${getVennDiagram(ex.opType)}
-                            </div>
-                        </div>
-                        <div class="col-right" id="sol-${ex.id}">
-                            <h4 style="color:var(--secondary); margin-top:0;">🦁 ¡Leo explica el proceso!</h4>
-                            ${ex.solutionSteps.map(step => `<div class="step">${step}</div>`).join('')}
-                            <div style="background:white; padding:10px; border-radius:8px; border:2px solid var(--secondary); text-align:center; font-weight:bold;">
-                                Rpta: ${ex.correct}
-                            </div>
+                        `).join('')}
+                        <div class="venn-container">${getVenn(ex.opType)}</div>
+                    </div>
+                    <div class="col-right" id="right-${ex.id}">
+                        <h3 style="color:var(--board)">🦁 Solución de Leo:</h3>
+                        ${ex.pasos.map(p => `<div class="step">${p}</div>`).join('')}
+                        <div style="margin-top:20px; font-weight:bold; color:var(--secondary); text-align:center; border:2px solid; padding:10px; border-radius:8px;">
+                            RPTA: ${ex.correct}
                         </div>
                     </div>
                 </div>
             `;
-            container.innerHTML += html;
+            container.appendChild(div);
         }
 
-        function validateAnswer(probId, selected, correct, optIdx) {
-            const label = document.getElementById(`label-${probId}-${optIdx}`);
-            const mark = document.getElementById(`mark-${probId}-${optIdx}`);
-            const container = document.getElementById(`options-container-${probId}`);
-            const solColumn = document.getElementById(`sol-${probId}`);
+        function check(id, selected, correct, el) {
+            const parent = document.getElementById(`left-${id}`);
+            const right = document.getElementById(`right-${id}`);
+            const status = el.querySelector('.status');
+            parent.classList.add('disabled');
+            right.style.display = 'block';
+            if (selected === correct) { el.classList.add('correct-choice'); status.innerHTML = '✅'; }
+            else { el.classList.add('wrong-choice'); status.innerHTML = '❌'; }
+        }
 
-            // Bloquear otras opciones
-            container.classList.add('disabled-options');
-
-            // Mostrar solución
-            solColumn.style.display = 'block';
-
-            if (selected === correct) {
-                label.classList.add('correct-choice');
-                mark.innerHTML = '✔';
-            } else {
-                label.classList.add('wrong-choice');
-                mark.innerHTML = '✘';
-                
-                // Resaltar la correcta discretamente para que el alumno aprenda
-                const allLabels = container.querySelectorAll('.option-item');
-                allLabels.forEach(l => {
-                    if(l.innerText.includes(correct)) {
-                        l.style.borderColor = "var(--secondary)";
-                    }
-                });
+        function getVenn(op) {
+            const color = "#FF9800";
+            if(op === 'complement') {
+                return `<svg width="140" height="90">
+                    <rect x="5" y="5" width="130" height="80" fill="${color}" fill-opacity="0.3" stroke="#333" />
+                    <circle cx="70" cy="45" r="30" fill="white" stroke="#333" />
+                    <text x="65" y="50">A</text><text x="10" y="20" font-size="10">U</text>
+                </svg>`;
             }
+            if(op === 'inter') {
+                return `<svg width="140" height="90">
+                    <circle cx="50" cy="45" r="30" fill="none" stroke="#333" />
+                    <circle cx="90" cy="45" r="30" fill="none" stroke="#333" />
+                    <path d="M 70 23 A 30 30 0 0 1 70 67 A 30 30 0 0 1 70 23" fill="${color}" />
+                </svg>`;
+            }
+            if(op === 'diff') {
+                return `<svg width="140" height="90">
+                    <circle cx="50" cy="45" r="30" fill="${color}" stroke="#333" />
+                    <circle cx="90" cy="45" r="30" fill="white" stroke="#333" />
+                </svg>`;
+            }
+            return `<svg width="140" height="90"><circle cx="70" cy="45" r="35" fill="${color}" fill-opacity="0.2" stroke="#333" /><text x="65" y="50">A</text></svg>`;
         }
 
-        function getVennDiagram(op) {
-            let fillA = "#fff", fillB = "#fff", fillCenter = "#fff";
-            const highlight = "#FFEB3B";
-
-            if(op === 'union') { fillA = fillB = fillCenter = highlight; }
-            if(op === 'inter') { fillCenter = highlight; }
-            if(op === 'diff') { fillA = highlight; }
-            if(op === 'symDiff') { fillA = fillB = highlight; }
-
-            return `
-            <svg class="venn-svg" viewBox="0 0 200 120">
-                <defs>
-                    <clipPath id="clipA"><circle cx="70" cy="60" r="45" /></clipPath>
-                </defs>
-                <circle cx="70" cy="60" r="45" fill="${fillA}" stroke="#333" stroke-width="2" />
-                <circle cx="130" cy="60" r="45" fill="${fillB}" stroke="#333" stroke-width="2" />
-                <circle cx="130" cy="60" r="45" clip-path="url(#clipA)" fill="${fillCenter}" stroke="#333" stroke-width="1" />
-                <text x="40" y="30" font-family="Arial" font-weight="bold" fill="#5D4037">A</text>
-                <text x="150" y="30" font-family="Arial" font-weight="bold" fill="#5D4037">B</text>
-            </svg>`;
-        }
-
-        window.onload = generateExercises;
+        window.onload = generateApp;
     </script>
 </body>
 </html>
