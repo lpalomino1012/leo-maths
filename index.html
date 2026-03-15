@@ -9,6 +9,7 @@
         :root {
             --primary: #FF9800;
             --secondary: #4CAF50;
+            --error: #F44336;
             --accent: #2196F3;
             --bg: #FFF9E1;
             --text: #333;
@@ -32,41 +33,44 @@
             font-size: 80px;
             margin: 0;
             animation: bounce 2s infinite;
+            display: inline-block;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
         h1 {
             font-family: 'Fredoka One', cursive;
             color: var(--primary);
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin: 10px 0;
-            text-shadow: 2px 2px #fff;
+            text-shadow: 3px 3px #fff;
         }
 
         .controls {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto 30px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto 40px;
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
             align-items: center;
+            border: 3px dashed var(--primary);
         }
 
         select, input, button {
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             border: 2px solid #ddd;
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
+            outline: none;
         }
 
         button {
@@ -74,91 +78,144 @@
             color: white;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s;
-            padding: 10px 25px;
+            transition: all 0.3s;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 0 #388E3C;
         }
 
         button:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #388E3C;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 0px 0 #388E3C;
         }
 
         .exercise-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .panel {
             background: var(--board-bg);
-            border: 4px solid #5D4037;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            box-shadow: 10px 10px 0px #A1887F;
+            border: 5px solid #5D4037;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            box-shadow: 12px 12px 0px #A1887F;
             overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .enunciado {
             background: #5D4037;
             color: white;
-            padding: 15px;
-            font-size: 1.2rem;
+            padding: 20px;
+            font-size: 1.3rem;
             font-weight: bold;
+            border-bottom: 2px solid #4E342E;
         }
 
         .columns {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 300px;
+            grid-template-columns: 1fr 1.2fr;
+            min-height: 350px;
         }
 
         .col-left {
-            padding: 20px;
-            border-right: 2px solid #5D4037;
+            padding: 25px;
+            border-right: 3px solid #5D4037;
+            background-color: #fff;
         }
 
         .col-right {
-            padding: 20px;
-            background: #f9f9f9;
-            display: none; /* Se muestra al resolver */
+            padding: 25px;
+            background: #f1f8e9;
+            display: none; /* Se activa al responder */
+            border-left: 1px solid #ddd;
         }
 
+        /* Estilos de las opciones */
         .option-item {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            border: 2px solid #eee;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
+            position: relative;
+            font-size: 1.1rem;
         }
 
         .option-item:hover {
-            background: #e3f2fd;
+            background: #f5f5f5;
+            border-color: var(--accent);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        /* Feedback visual */
+        .option-item.correct-choice {
+            background-color: #e8f5e9 !important;
+            border-color: var(--secondary) !important;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .option-item.wrong-choice {
+            background-color: #ffebee !important;
+            border-color: var(--error) !important;
+            color: #c62828;
+        }
+
+        .feedback-mark {
+            margin-left: auto;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .venn-svg {
             width: 100%;
-            max-width: 250px;
+            max-width: 280px;
             height: auto;
-            margin-top: 20px;
+            margin-top: 25px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .math {
             font-style: italic;
             font-weight: bold;
             color: #d32f2f;
+            background: #fff3e0;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
         .step {
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            border-left: 3px solid var(--accent);
-            padding-left: 10px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            line-height: 1.5;
         }
 
-        .highlight {
-            fill: #ffeb3b;
-            fill-opacity: 0.5;
+        .disabled-options {
+            pointer-events: none;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -167,34 +224,35 @@
     <header>
         <div class="lion-doodle">🦁</div>
         <h1>Leo Maths</h1>
-        <p>¡Aprende conjuntos de forma divertida!</p>
+        <p>¡Explora el mundo de los conjuntos con el Rey de la Selva!</p>
     </header>
 
     <div class="controls">
         <div>
-            <label>Ejercicios: </label>
-            <input type="number" id="qty" min="1" max="25" value="5">
+            <label>Cantidad (1-25): </label>
+            <input type="number" id="qty" min="1" max="25" value="3">
         </div>
         <div>
-            <label>Nivel: </label>
+            <label>Nivel de Complejidad: </label>
             <select id="level">
-                <option value="basic">Básico</option>
-                <option value="intermediate">Intermedio</option>
-                <option value="advanced">Avanzado (Pre-U)</option>
+                <option value="basic">Nivel Básico</option>
+                <option value="intermediate">Nivel Intermedio</option>
+                <option value="advanced">Nivel Avanzado (Pre-U)</option>
             </select>
         </div>
-        <button onclick="generateExercises()">¡Generar Ejercicios!</button>
+        <button onclick="generateExercises()">¡Generar Pizarras!</button>
     </div>
 
     <div id="exercise-list" class="exercise-container"></div>
 
     <script>
-        const symbols = { union: '∪', inter: '∩', diff: '-', symDiff: 'Δ' };
-
         function generateExercises() {
-            const qty = document.getElementById('qty').value;
+            const qty = parseInt(document.getElementById('qty').value);
             const level = document.getElementById('level').value;
             const container = document.getElementById('exercise-list');
+            
+            if(qty < 1 || qty > 25) { alert("Por favor elige entre 1 y 25"); return; }
+            
             container.innerHTML = '';
 
             for (let i = 1; i <= qty; i++) {
@@ -204,87 +262,100 @@
         }
 
         function createProblem(level, index) {
-            let A, B, U = [0,1,2,3,4,5,6,7,8,9];
+            let A = [], B = [], result = [];
             let operation = ['union', 'inter', 'diff', 'symDiff'][Math.floor(Math.random() * 4)];
-            let problem = { id: index, level: level };
+            let problem = { id: index, level: level, opType: operation };
 
+            // Generación lógica según nivel
             if (level === 'basic') {
-                A = [1, 2, 3, 4];
-                B = [3, 4, 5, 6];
-                problem.compA = "A = { x ∈ ℕ / 1 ≤ x ≤ 4 }";
-                problem.compB = "B = { x ∈ ℕ / 3 ≤ x ≤ 6 }";
+                const start = Math.floor(Math.random() * 5) + 1;
+                A = [start, start+1, start+2, start+3];
+                B = [start+2, start+3, start+4, start+5];
+                problem.compA = `A = { x ∈ ℕ / ${start} ≤ x ≤ ${start+3} }`;
+                problem.compB = `B = { x ∈ ℕ / ${start+2} ≤ x ≤ ${start+5} }`;
             } else if (level === 'intermediate') {
                 const n = Math.floor(Math.random() * 3) + 2;
-                A = [2, 4, 6];
-                B = [4, 6, 8];
-                problem.compA = "A = { 2x / x ∈ ℕ, 1 ≤ x ≤ 3 }";
-                problem.compB = "B = { 2x / x ∈ ℕ, 2 ≤ x ≤ 4 }";
+                A = [2, 4, 6, 8].filter(x => x <= n*4);
+                B = [4, 6, 8, 10].filter(x => x <= n*4);
+                problem.compA = `A = { 2x / x ∈ ℕ, 1 ≤ x ≤ ${Math.max(...A)/2} }`;
+                problem.compB = `B = { 2x / x ∈ ℕ, 2 ≤ x ≤ ${Math.max(...B)/2} }`;
             } else {
-                A = [1, 2, 3, 5, 7]; // Primos y 1
-                B = [2, 4, 6, 8]; // Pares
-                problem.compA = "A = { x / x es primo < 10 o x=1 }";
-                problem.compB = "B = { x / x es par, x < 10 }";
+                A = [2, 3, 5, 7];
+                B = [1, 3, 5, 7, 9];
+                problem.compA = "A = { x / x es un número primo < 10 }";
+                problem.compB = "B = { x / x es un número impar < 10 }";
             }
 
             problem.extA = `{ ${A.join(', ')} }`;
             problem.extB = `{ ${B.join(', ')} }`;
             
-            let result;
             let opName;
             if (operation === 'union') {
-                result = [...new Set([...A, ...B])].sort();
-                opName = "Unión (A ∪ B)";
+                result = [...new Set([...A, ...B])].sort((a,b)=>a-b);
+                opName = "A ∪ B (Unión)";
             } else if (operation === 'inter') {
-                result = A.filter(x => B.includes(x)).sort();
-                opName = "Intersección (A ∩ B)";
+                result = A.filter(x => B.includes(x)).sort((a,b)=>a-b);
+                opName = "A ∩ B (Intersección)";
             } else if (operation === 'diff') {
-                result = A.filter(x => !B.includes(x)).sort();
-                opName = "Diferencia (A - B)";
+                result = A.filter(x => !B.includes(x)).sort((a,b)=>a-b);
+                opName = "A - B (Diferencia)";
             } else {
                 let u = [...new Set([...A, ...B])];
                 let i = A.filter(x => B.includes(x));
-                result = u.filter(x => !i.includes(x)).sort();
-                opName = "Diferencia Simétrica (A Δ B)";
+                result = u.filter(x => !i.includes(x)).sort((a,b)=>a-b);
+                opName = "A Δ B (Diferencia Simétrica)";
             }
 
-            problem.enunciado = `Dados los conjuntos expresados por comprensión:<br><span class='math'>${problem.compA}</span><br><span class='math'>${problem.compB}</span><br>Calcule la operación: <b>${opName}</b>`;
             problem.correct = `{ ${result.join(', ')} }`;
-            problem.options = shuffle([problem.correct, "{ 1, 2 }", "{ 3, 4, 5 }", "{ }", "{ 0, 1, 2 }"]);
+            if(result.length === 0) problem.correct = "{ }";
+
+            // Crear opciones falsas
+            let options = new Set([problem.correct]);
+            while(options.size < 4) {
+                let fake = [Math.floor(Math.random()*10), Math.floor(Math.random()*10)].sort();
+                options.add(`{ ${fake.join(', ')} }`);
+            }
+            problem.options = Array.from(options).sort(() => Math.random() - 0.5);
+
+            problem.enunciado = `Dados los conjuntos:<br><span class='math'>${problem.compA}</span><br><span class='math'>${problem.compB}</span><br>Halle el conjunto resultante de la operación: <b>${opName}</b>`;
+            
             problem.solutionSteps = [
-                `1. Determinamos por extensión A: ${problem.extA}`,
-                `2. Determinamos por extensión B: ${problem.extB}`,
-                `3. Aplicamos la propiedad de ${opName}: ${problem.correct}`,
-                `4. Gráficamente, se sombrean los elementos correspondientes en el diagrama de Venn.`
+                `<b>Paso 1:</b> Convertir A a extensión ➔ A = ${problem.extA}`,
+                `<b>Paso 2:</b> Convertir B a extensión ➔ B = ${problem.extB}`,
+                `<b>Paso 3:</b> Aplicar definición de ${opName}.`,
+                `<b>Paso 4:</b> Identificar elementos resultantes ➔ ${problem.correct}`
             ];
-            problem.opType = operation;
 
             return problem;
         }
 
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
-
         function renderProblem(ex, container) {
             const html = `
-                <div class="panel" id="p-${ex.id}">
+                <div class="panel" id="panel-${ex.id}">
                     <div class="enunciado">Problema #${ex.id}: ${ex.enunciado}</div>
                     <div class="columns">
-                        <div class="col-left">
-                            <strong>Selecciona la respuesta:</strong>
-                            ${ex.options.map(opt => `
-                                <label class="option-item">
-                                    <input type="radio" name="q-${ex.id}" onclick="showSolution(${ex.id})"> ${opt}
-                                </label>
-                            `).join('')}
+                        <div class="col-left" id="options-container-${ex.id}">
+                            <strong>Selecciona tu respuesta:</strong>
+                            <div style="margin-top:15px">
+                                ${ex.options.map((opt, i) => `
+                                    <label class="option-item" id="label-${ex.id}-${i}">
+                                        <input type="radio" name="answer-${ex.id}" 
+                                               onclick="validateAnswer(${ex.id}, '${opt}', '${ex.correct}', ${i})">
+                                        <span>${opt}</span>
+                                        <span class="feedback-mark" id="mark-${ex.id}-${i}"></span>
+                                    </label>
+                                `).join('')}
+                            </div>
                             <div id="venn-${ex.id}">
                                 ${getVennDiagram(ex.opType)}
                             </div>
                         </div>
                         <div class="col-right" id="sol-${ex.id}">
-                            <h4 style="color:var(--secondary)">✔ Solución Paso a Paso:</h4>
+                            <h4 style="color:var(--secondary); margin-top:0;">🦁 ¡Leo explica el proceso!</h4>
                             ${ex.solutionSteps.map(step => `<div class="step">${step}</div>`).join('')}
-                            <p style="margin-top:20px; font-weight:bold; color:var(--primary)">Resultado Final: ${ex.correct}</p>
+                            <div style="background:white; padding:10px; border-radius:8px; border:2px solid var(--secondary); text-align:center; font-weight:bold;">
+                                Rpta: ${ex.correct}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -292,41 +363,57 @@
             container.innerHTML += html;
         }
 
-        function showSolution(id) {
-            document.getElementById(`sol-${id}`).style.display = 'block';
+        function validateAnswer(probId, selected, correct, optIdx) {
+            const label = document.getElementById(`label-${probId}-${optIdx}`);
+            const mark = document.getElementById(`mark-${probId}-${optIdx}`);
+            const container = document.getElementById(`options-container-${probId}`);
+            const solColumn = document.getElementById(`sol-${probId}`);
+
+            // Bloquear otras opciones
+            container.classList.add('disabled-options');
+
+            // Mostrar solución
+            solColumn.style.display = 'block';
+
+            if (selected === correct) {
+                label.classList.add('correct-choice');
+                mark.innerHTML = '✔';
+            } else {
+                label.classList.add('wrong-choice');
+                mark.innerHTML = '✘';
+                
+                // Resaltar la correcta discretamente para que el alumno aprenda
+                const allLabels = container.querySelectorAll('.option-item');
+                allLabels.forEach(l => {
+                    if(l.innerText.includes(correct)) {
+                        l.style.borderColor = "var(--secondary)";
+                    }
+                });
+            }
         }
 
         function getVennDiagram(op) {
-            const activeA = (op === 'union' || op === 'diff' || op === 'symDiff') ? 'highlight' : '';
-            const activeB = (op === 'union' || op === 'symDiff') ? 'highlight' : '';
-            const activeInter = (op === 'union' || op === 'inter') ? 'highlight' : '';
-            
-            // Lógica de sombreado simplificada para SVG
-            let fillA = "#eee", fillB = "#eee", fillCenter = "#eee";
-            if(op === 'union') { fillA = fillB = fillCenter = "#ffeb3b"; }
-            if(op === 'inter') { fillCenter = "#ffeb3b"; }
-            if(op === 'diff') { fillA = "#ffeb3b"; }
-            if(op === 'symDiff') { fillA = fillB = "#ffeb3b"; }
+            let fillA = "#fff", fillB = "#fff", fillCenter = "#fff";
+            const highlight = "#FFEB3B";
+
+            if(op === 'union') { fillA = fillB = fillCenter = highlight; }
+            if(op === 'inter') { fillCenter = highlight; }
+            if(op === 'diff') { fillA = highlight; }
+            if(op === 'symDiff') { fillA = fillB = highlight; }
 
             return `
             <svg class="venn-svg" viewBox="0 0 200 120">
                 <defs>
                     <clipPath id="clipA"><circle cx="70" cy="60" r="45" /></clipPath>
-                    <clipPath id="clipB"><circle cx="130" cy="60" r="45" /></clipPath>
                 </defs>
-                <!-- Círculo A -->
                 <circle cx="70" cy="60" r="45" fill="${fillA}" stroke="#333" stroke-width="2" />
-                <!-- Círculo B -->
                 <circle cx="130" cy="60" r="45" fill="${fillB}" stroke="#333" stroke-width="2" />
-                <!-- Intersección -->
-                <circle cx="130" cy="60" r="45" clip-path="url(#clipA)" fill="${fillCenter}" stroke="#333" stroke-width="2" />
-                
-                <text x="40" y="30" font-family="Arial" font-weight="bold">A</text>
-                <text x="150" y="30" font-family="Arial" font-weight="bold">B</text>
+                <circle cx="130" cy="60" r="45" clip-path="url(#clipA)" fill="${fillCenter}" stroke="#333" stroke-width="1" />
+                <text x="40" y="30" font-family="Arial" font-weight="bold" fill="#5D4037">A</text>
+                <text x="150" y="30" font-family="Arial" font-weight="bold" fill="#5D4037">B</text>
             </svg>`;
         }
 
-        // Generar iniciales
         window.onload = generateExercises;
     </script>
 </body>
